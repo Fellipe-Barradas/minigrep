@@ -2,7 +2,7 @@ use clap::Parser;
 
 mod commands;
 
-use commands::CommandsEnum;
+use commands::*;
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
@@ -17,10 +17,10 @@ fn main() {
 
    match &args.command {
         Some(CommandsEnum::Count{input, file}) => {
-           println!("Counting => input: {}, file: {}", input, file);
+            count(input, file);
         },
         Some(CommandsEnum::Find { input, file }) => {
-            println!("Finding => input: {}, file: {}", input, file)
+            find_word(input, file);
         }
         None => {
             println!("No command");
