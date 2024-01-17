@@ -1,42 +1,25 @@
-use clap::{Parser, Subcommand};
+use clap::Parser;
+
+mod commands;
+
+use commands::CommandsEnum;
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
 struct Cli {
     /// Turn debugging information on
     #[command(subcommand)]
-    command: Option<Commands>,
+    command: Option<CommandsEnum>,
 }
 
-#[derive(Subcommand)]
-enum Commands {
-    Count{
-        /// Palavra de busca
-        #[arg()]
-        input: String,
-
-        /// Arquivo de entrada
-        #[arg()]
-        file: String,
-    },
-    Find {
-        /// Palavra de busca
-        #[arg()]
-        input: String,
-
-        /// Arquivo de entrada
-        #[arg()]
-        file: String,
-    }
-}
 fn main() {
    let args = Cli::parse();
 
    match &args.command {
-        Some(Commands::Count{input, file}) => {
+        Some(CommandsEnum::Count{input, file}) => {
            println!("Counting => input: {}, file: {}", input, file);
         },
-        Some(Commands::Find { input, file }) => {
+        Some(CommandsEnum::Find { input, file }) => {
             println!("Finding => input: {}, file: {}", input, file)
         }
         None => {
